@@ -5,6 +5,7 @@ import lombok.*;
 import java.time.LocalDateTime;
 import java.util.List;
 
+
 public class PostListDto {
     @Getter @Builder
     @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -16,6 +17,7 @@ public class PostListDto {
         private String content; // 게시글 내용
         private LocalDateTime updatedAt; // 최종 수정 날짜
     }
+
     // 게시글 조회 : List<Post> posts
     @Getter
     @Builder

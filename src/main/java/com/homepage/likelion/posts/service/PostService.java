@@ -10,4 +10,7 @@ public interface PostService {
     ResponseEntity<CustomApiResponse<?>> createPost(PostCreateDto.Req req);
     ResponseEntity<CustomApiResponse<?>> modifyPost(Long postId, PostUpdateDto.Req req);
     ResponseEntity<CustomApiResponse<?>> getOnePost(Long postId);
+
+    // 게시글 전체 조회
+    ResponseEntity<CustomApiResponse<?>> getAllPosts();
 }

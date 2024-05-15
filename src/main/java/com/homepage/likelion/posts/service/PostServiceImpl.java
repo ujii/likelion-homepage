@@ -12,6 +12,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -53,7 +55,7 @@ public class PostServiceImpl implements PostService{
         postRepository.flush();
 
         // 수정한 게시글 정보 응답
-        PostUpdateDto.UpdatePost data = new PostUpdateDto.UpdatePost(post.getUpdateAt());
+        PostUpdateDto.UpdatePost data = new PostUpdateDto.UpdatePost(post.getUpdatedAt());
         CustomApiResponse<PostUpdateDto.UpdatePost> res = CustomApiResponse.createSuccess(HttpStatus.OK.value(), data, "게시글이 수정되었습니다.");
         return ResponseEntity.ok(res);
     }
@@ -72,10 +74,32 @@ public class PostServiceImpl implements PostService{
 
         Post post = optionalPost.get();
         PostListDto.PostResponse postResponse = new PostListDto.PostResponse(
-                post.getId(), post.getPostedUserName(), post.getTitle(), post.getContent(), post.getUpdateAt());
+                post.getId(), post.getPostedUserName(), post.getTitle(), post.getContent(), post.getUpdatedAt());
 
         // 게시글 한 개 응답
         CustomApiResponse<PostListDto.PostResponse> res = CustomApiResponse.createSuccess(HttpStatus.OK.value(), postResponse, "게시글 1개 조회를 성공했습니다.");
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(res);
     }
+
+    @Override
+    public ResponseEntity<CustomApiResponse<?>> getAllPosts() {
+//        List<Post> posts = postRepository.findAll();
+//
+//        // 게시글이 하나도 없으면
+//        if (posts.isEmpty()) {
+//            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+//                    .body(CustomApiResponse.createFailWithout(HttpStatus.NOT_FOUND.value(), "게시글이 없습니다."));
+//        }
+//
+//        return ResponseEntity.status(HttpStatus.OK)
+//                .body(CustomApiResponse.createSuccess(HttpStatus.OK.value(), posts, "전체 게시글 조회 성공"));
+
+        List<Post> posts = postRepository.findAll();
+
+
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(CustomApiResponse.createSuccess(HttpStatus.OK.value(), posts, "전체 게시글 조회 성공"));
+
+    }
+
 }

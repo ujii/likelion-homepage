@@ -17,7 +17,7 @@ public class PostController {
 
     private final PostService postService;
 
-    // 개시글 작성
+    // 게시글 작성
     @PostMapping
     public ResponseEntity<CustomApiResponse<?>> createPost(@Valid @RequestBody PostCreateDto.Req req) {
 
@@ -38,6 +38,12 @@ public class PostController {
     @GetMapping
     public ResponseEntity<CustomApiResponse<?>> getOnePost(@RequestParam("postId") Long postId) {
         ResponseEntity<CustomApiResponse<?>> result = postService.getOnePost(postId);
+        return result;
+    }
+
+    @GetMapping("/all")
+    public ResponseEntity<CustomApiResponse<?>> getAllPosts() {
+        ResponseEntity<CustomApiResponse<?>> result = postService.getAllPosts();
         return result;
     }
 
