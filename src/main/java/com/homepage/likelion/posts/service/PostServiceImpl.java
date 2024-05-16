@@ -83,22 +83,22 @@ public class PostServiceImpl implements PostService{
 
     @Override
     public ResponseEntity<CustomApiResponse<?>> getAllPosts() {
-//        List<Post> posts = postRepository.findAll();
-//
-//        // 게시글이 하나도 없으면
-//        if (posts.isEmpty()) {
-//            return ResponseEntity.status(HttpStatus.NOT_FOUND)
-//                    .body(CustomApiResponse.createFailWithout(HttpStatus.NOT_FOUND.value(), "게시글이 없습니다."));
-//        }
-//
-//        return ResponseEntity.status(HttpStatus.OK)
-//                .body(CustomApiResponse.createSuccess(HttpStatus.OK.value(), posts, "전체 게시글 조회 성공"));
 
         List<Post> posts = postRepository.findAll();
+        List<PostListDto.PostResponse> postResponses = new ArrayList<>();
 
+        for (Post post : posts) {
+            postResponses.add(PostListDto.PostResponse.builder()
+                    .postId(post.getId())
+                    .postedUserName(post.getPostedUserName())
+                    .title(post.getTitle())
+                    .content(post.getContent())
+                    .updatedAt(post.getUpdatedAt())
+                    .build());
+        }
 
         return ResponseEntity.status(HttpStatus.OK)
-                .body(CustomApiResponse.createSuccess(HttpStatus.OK.value(), posts, "전체 게시글 조회 성공"));
+                .body(CustomApiResponse.createSuccess(HttpStatus.OK.value(), postResponses, "전체 게시글 조회 성공"));
 
     }
 
