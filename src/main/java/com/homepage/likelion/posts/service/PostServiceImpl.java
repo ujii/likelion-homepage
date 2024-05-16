@@ -97,8 +97,10 @@ public class PostServiceImpl implements PostService{
                     .build());
         }
 
+        PostListDto.SearchPostsRes searchPostsRes = new PostListDto.SearchPostsRes(postResponses);
+
         return ResponseEntity.status(HttpStatus.OK)
-                .body(CustomApiResponse.createSuccess(HttpStatus.OK.value(), postResponses, "전체 게시글 조회 성공"));
+                .body(CustomApiResponse.createSuccess(HttpStatus.OK.value(), searchPostsRes, "전체 게시글 조회 성공"));
 
     }
 
